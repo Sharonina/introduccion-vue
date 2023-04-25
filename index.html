@@ -9,17 +9,23 @@
   <body>
     <script src="https://unpkg.com/vue@next"></script>
 
-    <div id="app">{{ text }}</div>
+    <div id="app"></div>
 
     <script>
       Vue.createApp({
         data() {
           return {
             text: "Hello Word!",
+            attr: "src",
+            img: "https://images3.alphacoders.com/884/884696.jpg",
           };
         },
         //Los templates permiten utiilizar directivas: v-once: no permite que se mute el texto, v-text: se trae lo que hay en variable text en lugar de {{}}, v-html permite inyectar html, escapando los tags (no recomendado para añadir inputs)
-        template: `<p v-once v-text='text'></p>`,
+        //v-bind: puede recibir argumentos y valores, incluso de forma dinámica (var)
+        template: `
+            <p v-once v-text='text'></p>
+            <img :[attr]="img" v-bind:alt="img" />
+          `,
       }).mount("#app");
     </script>
   </body>
