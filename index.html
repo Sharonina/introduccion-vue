@@ -18,12 +18,28 @@
             text: "Hello Word!",
             attr: "src",
             img: "https://images3.alphacoders.com/884/884696.jpg",
+            counter: 0,
+            counter2: 0,
           };
+        },
+        methods: {
+          increment() {
+            this.counter++;
+          },
+          submit() {
+            this.counter2++;
+          },
         },
         //Los templates permiten utiilizar directivas: v-once: no permite que se mute el texto, v-text: se trae lo que hay en variable text en lugar de {{}}, v-html permite inyectar html, escapando los tags (no recomendado para añadir inputs)
         //v-bind: puede recibir argumentos y valores, incluso de forma dinámica (var)
         template: `
             <p v-once v-text='text'></p>
+            <p>Boton click</p>
+            <button v-on:click='increment'>{{counter}}</button>
+            <p>Boton submit con prevent default</p>
+            <form v-on:submit.prevent='submit'>
+              <button>{{counter2}}</button>
+            </form>
             <img :[attr]="img" v-bind:alt="img" />
           `,
       }).mount("#app");
