@@ -18,6 +18,8 @@
             text: "Hello Word!",
           };
         },
+        //Los templates permiten utiilizar directivas: v-once: no permite que se mute el texto, v-text: se trae lo que hay en variable text en lugar de {{}}, v-html permite inyectar html, escapando los tags (no recomendado para añadir inputs)
+        template: `<p v-once v-text='text'></p>`,
       }).mount("#app");
     </script>
   </body>
