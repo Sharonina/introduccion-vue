@@ -43,6 +43,7 @@
                 description: "Descripcion",
               },
             ],
+            losItems: ["a", "b", "c", ,],
           };
         },
 
@@ -155,14 +156,19 @@
                   <p>Soy el parrafo que viene del template al slot con nombre content</p>
                 </template>
               </v-layout>
-
             </div>
+
+            <h3>- Comunicación de componentes: padre > hijo </h3>
+            <ul>
+              <v-otroItem v-for="(item, i) in losItems" :key=i :textItem='item' ></v-otroItem>
+            </ul>
 
             <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
       });
 
       //los componentes reciben 2arg principales: nombre del comp, options
+      // la forma más facil de añadir props es con [], pero se considera mala practica
       app.component("item", {
         props: ["post"],
         template: `
@@ -191,6 +197,22 @@
           <div>
             <slot name='content' />
           </div>
+        `,
+      });
+
+      // donde se una un v-bind: se debe hacer una interpolacion de dicha variable
+      // la mejor practica para usar props es usar {}, declarandolo como un head
+      app.component("v-otroItem", {
+        props: {
+          textItem: {
+            default: "texto vacio",
+            type: String,
+          },
+        },
+        template: `
+          <li>
+            {{textItem}}
+          </li>
         `,
       });
 
