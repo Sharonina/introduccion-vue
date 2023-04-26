@@ -49,6 +49,9 @@
           doorLabel() {
             return this.open ? "Cerrar" : "Abrir";
           },
+          styles() {
+            return this.open ? ["open"] : ["close"];
+          },
         },
 
         // Debe seguir la regla de tener el MISMO nombre de la variable observada, se recomienda que solo se usen para 1 cosa
@@ -85,13 +88,29 @@
             <div>{{fullName}}</div>
             <div>{{today}}</div>
 
-            <h3>- Watchers</h3>
-            <p>{{text3}}</p>
-            <button @Click='open = !open'>{{doorLabel}}</button>
+            <div class='watchers' :class='styles'>
+              <h3>- Watchers</h3>
+              <p>{{text3}}</p>
+              <button @Click='open = !open'>{{doorLabel}}</button>
+            </div>
 
-            <img :[attr]="img" v-bind:alt="img" />
+            <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
       }).mount("#app");
     </script>
+    <style>
+      .foxImg {
+        width: 95vw;
+        margin-top: 1rem;
+      }
+
+      .close {
+        background-color: #eca1a6;
+      }
+
+      .open {
+        background-color: #b5e7a0;
+      }
+    </style>
   </body>
 </html>
