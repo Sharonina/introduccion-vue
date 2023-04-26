@@ -44,6 +44,7 @@
               },
             ],
             losItems: ["a", "b", "c", ,],
+            text5: "Hello vue",
           };
         },
 
@@ -174,6 +175,12 @@
               />
             </ul>
 
+            <h3>- Custom v-model </h3>
+            <div>
+              <p>{{text5}}</p>
+              <v-input v-model:values='text5' />
+            </div>
+
             <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
       });
@@ -230,6 +237,20 @@
           <li @click='rm'>
             {{textItem}}
           </li>
+        `,
+      });
+
+      app.component("v-input", {
+        props: {
+          values: String,
+        },
+        methods: {
+          input(e) {
+            this.$emit("update:values", e.target.value);
+          },
+        },
+        template: `
+          <input type='text' :value='values' @input='input' />
         `,
       });
 
