@@ -26,6 +26,9 @@
             now: new Date(),
             text3: "Puerta cerrada",
             open: false,
+            text4: "Inicia sesion",
+            sesionIniciada: false,
+            name: "",
           };
         },
 
@@ -52,6 +55,9 @@
           styles() {
             return this.open ? ["open"] : ["close"];
           },
+          estilos() {
+            return this.sesionIniciada ? ["sesionIniciada"] : ["sesionCerrada"];
+          },
         },
 
         // Debe seguir la regla de tener el MISMO nombre de la variable observada, se recomienda que solo se usen para 1 cosa
@@ -62,6 +68,14 @@
               this.text3 = "Puerta abierta";
             } else {
               this.text3 = "Puerta cerrada";
+            }
+          },
+          sesionIniciada(value) {
+            if (value === true) {
+              this.text4 = "Sesion iniciada";
+            } else {
+              this.text4 = "Inicia sesion";
+              this.name = "";
             }
           },
         },
@@ -94,6 +108,22 @@
               <button @Click='open = !open'>{{doorLabel}}</button>
             </div>
 
+            <div class='watchers' :class='estilos'>
+              <h3>- Watchers</h3>
+              <p>{{text4}}</p>
+              <div v-if='sesionIniciada'>
+                <p>¡Hola, bienvenidx {{name}}!</p>
+              </div>
+              <div v-else='!sesionIniciada'>
+                <label>Ingresa tu nombre de usuario</label>
+                <input type='text' v-model='name' placeholder='Fulanitx perenganita' />
+              </div>
+              <button @Click='sesionIniciada = !sesionIniciada'>
+                <div v-if='!sesionIniciada'>sign in</div>
+                <div v-else='sesionIniciada'>sign out</div>
+              </button>
+            </div>
+
             <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
       }).mount("#app");
@@ -110,6 +140,14 @@
 
       .open {
         background-color: #b5e7a0;
+      }
+
+      .sesionIniciada {
+        background-color: #c2e6f4;
+      }
+
+      .sesionCerrada {
+        background-color: #6ecae9;
       }
     </style>
   </body>
