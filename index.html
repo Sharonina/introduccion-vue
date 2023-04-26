@@ -24,6 +24,8 @@
             firstName: "Sharonina",
             lastName: "Arana",
             now: new Date(),
+            text3: "Puerta cerrada",
+            open: false,
           };
         },
 
@@ -43,6 +45,21 @@
           },
           today() {
             return this.now.toLocaleDateString();
+          },
+          doorLabel() {
+            return this.open ? "Cerrar" : "Abrir";
+          },
+        },
+
+        // Debe seguir la regla de tener el MISMO nombre de la variable observada, se recomienda que solo se usen para 1 cosa
+        // Puede recibir argumentos: 1) Valor que se le acaba de asignar, 2) Valor previo
+        watch: {
+          open(value) {
+            if (value === true) {
+              this.text3 = "Puerta abierta";
+            } else {
+              this.text3 = "Puerta cerrada";
+            }
           },
         },
 
@@ -67,6 +84,10 @@
             <h3>- Propiedades computadas</h3>
             <div>{{fullName}}</div>
             <div>{{today}}</div>
+
+            <h3>- Watchers</h3>
+            <p>{{text3}}</p>
+            <button @Click='open = !open'>{{doorLabel}}</button>
 
             <img :[attr]="img" v-bind:alt="img" />
           `,
