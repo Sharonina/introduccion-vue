@@ -45,8 +45,23 @@
             ],
             losItems: ["a", "b", "c", ,],
             text5: "Hello vue",
+            text6: "Buenas tardes",
           };
         },
+
+        // El provide se utiliza para pasar props desde un componente padre hasta componentes hijos de hijos, sin pasar entre componentes
+        // El provide por si mismo NO es reactivo hasta que se utiliza como una funcion que retorna un json (como data)
+        // El componente que recive dichas props, es quien usa el inject
+        provide: {
+          otroTexto: "Hola Mundo",
+        },
+
+        // el provide también permite hacer referencias a otras variables
+        /* provide(){
+          return {
+            otroTexto: this.text6,
+          }
+        }, */
 
         methods: {
           increment() {
@@ -181,6 +196,12 @@
               <v-input v-model:values='text5' />
             </div>
 
+            <h3>- Provide & Inject </h3>
+            <div>
+              <p>{{text6}}</p>
+              <otro />
+            </div>
+
             <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
       });
@@ -251,6 +272,24 @@
         },
         template: `
           <input type='text' :value='values' @input='input' />
+        `,
+      });
+
+      app.component("otro", {
+        template: `<tercer />`,
+      });
+
+      //al utilizar el inject, debemos mandar llamar a la variable que se esta propagando desde el provider
+      // inject puede usarse en tipo [] y {}.
+      app.component("tercer", {
+        /* inject: ["otroTexto"], */
+        inject: {
+          texto: {
+            from: "otroTexto",
+          },
+        },
+        template: `
+          <div>{{texto}}</div>
         `,
       });
 
