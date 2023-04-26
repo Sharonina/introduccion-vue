@@ -145,17 +145,51 @@
               </button>
             </div>
 
+            <h3>- Slots</h3>
+            <div>
+              <v-layout>
+                <template v-slot:header>
+                  <h4>Soy el h4 que viene del template al slot con nombre header</h4>
+                </template>
+                <template v-slot:content>
+                  <p>Soy el parrafo que viene del template al slot con nombre content</p>
+                </template>
+              </v-layout>
+
+            </div>
+
             <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
       });
 
-      //los componentes reciben 2arg principales: nombre del comp,
+      //los componentes reciben 2arg principales: nombre del comp, options
       app.component("item", {
         props: ["post"],
         template: `
           <div class='item'>
             <h4 class='title'>{{post.title}}</h4>
             <p>{{post.description}}</p>
+          </div>
+        `,
+      });
+
+      // sintaxis 'v-nombre' cuando el componente será base de otros componentes
+      //los slots se traen todo el contenido que tenga el componente. se les puede poner nombre con el atributo 'name' para saber que cosa va especificamente dentro de ellos
+      /* app.component("v-header", {
+        template: `
+          <header>
+            <slot/>
+          </header>
+        `,
+      }); */
+
+      app.component("v-layout", {
+        template: `
+          <header>
+            <slot name='header' />
+          </header>
+          <div>
+            <slot name='content' />
           </div>
         `,
       });
