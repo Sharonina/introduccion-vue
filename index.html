@@ -12,7 +12,7 @@
     <div id="app"></div>
 
     <script>
-      Vue.createApp({
+      const app = Vue.createApp({
         data() {
           return {
             text: "Hello Word!",
@@ -128,10 +128,11 @@
               <div v-if='sesionIniciada' class='sesionIniciadaContainer'>
                 <p>¡Hola, bienvenidx {{name}}!</p>
                 <div class='list'>
-                  <div v-for='(item, i) in posts' :key='i' class='item'>
-                    <h4 class='title'>{{item.title}}</h4>
-                    <p>{{item.description}}</p>
-                  </div>
+                  <item
+                    v-for='(item, i) in posts'
+                    :key='i'
+                    :post='item'
+                  />
                 </div>
               </div>
               <div v-else='!sesionIniciada'>
@@ -146,8 +147,22 @@
 
             <img class='foxImg' :[attr]="img" v-bind:alt="img" />
           `,
-      }).mount("#app");
+      });
+
+      //los componentes reciben 2arg principales: nombre del comp,
+      app.component("item", {
+        props: ["post"],
+        template: `
+          <div class='item'>
+            <h4 class='title'>{{post.title}}</h4>
+            <p>{{post.description}}</p>
+          </div>
+        `,
+      });
+
+      const vm = app.mount("#app");
     </script>
+
     <style>
       .foxImg {
         width: 90vw;
